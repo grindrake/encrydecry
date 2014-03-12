@@ -6,32 +6,22 @@ using namespace std;
 
 void main()
 {
-	int n;
+	long n=0;
 	char* insides;
 	char* output;
 	FILE* f;
 
-	f = fopen ("../../text1.txt","r");
-	if (!f) {}
-	else
+	f = fopen ("../../tex.txt","r");
+
+	if (f) 
 	{
 	fseek (f, 0, SEEK_END);
-	}
-	if (!f) {}
-	else
-	{
 	n = ftell (f);
-	}
-	if (!f) {}
-	else
-	{
 	rewind (f);
-	}
-
 	insides = new char[n];
 	output = new char[n];
-
-	fread (&insides, sizeof(char), 1, f);
+	rewind(f);
+	fread (insides, sizeof(char), 0, f);
 	
 	for (int i=0; i<(sizeof(char)*n); i++)
 	{
@@ -39,10 +29,11 @@ void main()
 		cout<<output[i];
 	}
 	
-	if (!f) {}
+	fclose (f);
+	}
 	else
 	{
-	fclose (f);
+		cout<<"Empty stream"<<"\n";
 	}
 
 	system("pause");
