@@ -12,7 +12,7 @@ void main()
 	long length; 
 	char* insides;
 	byte* output;
-	byte** pointer;
+	byte* pointer;
 	FILE* f;
 
 	f = fopen ("../../tex.txt","r");
@@ -23,13 +23,13 @@ void main()
 	n = ftell (f);
 	rewind (f);
 	insides = new char[n];
-	output = new byte[n];
+	output = new byte[sizeof(byte)*n];
 	rewind(f);
 	fread (insides, sizeof(char), 0, f);
 	
-	for (int i=0; i<(sizeof(char)*n); i++)
+	for (int i=0; i<(sizeof(byte)*n); i++)
 	{
-		fread(&(output[i]), sizeof(char), 1, f);
+		fread(&(output[i]), sizeof(byte), 1, f);
 		cout<<output[i];
 	}
 	
@@ -40,16 +40,13 @@ void main()
 		cout<<"Empty stream"<<"\n";
 	}
 
-	cout<<"\n";
-	//for(int i=0; i<n; i++)
-	//{
-	//	cout<<output[i];
-	//}
+	cout<<"\n"<<"\n";
+	pointer = output;
 
-	//cout<<((byte*)&output);
-	pointer = &output;
-	cout<<(*pointer+1);
+	for(int k=0; k*32<=n; k++)
+	{
+	cout<<pointer+k*sizeof(byte)*32<<"\n"<<"\n";
+	}
 	
-
 	system("pause");
 }
