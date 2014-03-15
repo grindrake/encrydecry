@@ -12,6 +12,7 @@ void main()
 	long length; 
 	char* insides;
 	byte* output;
+	byte** pointer;
 	FILE* f;
 
 	f = fopen ("../../tex.txt","r");
@@ -38,6 +39,17 @@ void main()
 	{
 		cout<<"Empty stream"<<"\n";
 	}
+
+	cout<<"\n";
+	//for(int i=0; i<n; i++)
+	//{
+	//	cout<<output[i];
+	//}
+
+	//cout<<((byte*)&output);
+	pointer = &output;
+	cout<<(*pointer+1);
+	
 
 	system("pause");
 }
