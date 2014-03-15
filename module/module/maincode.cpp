@@ -1,14 +1,17 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+#include "CryptoPP\aes.h"
+#include "CryptoPP\md5.h"
 
 using namespace std;
 
 void main()
 {
 	long n=0;
+	long length; 
 	char* insides;
-	char* output;
+	byte* output;
 	FILE* f;
 
 	f = fopen ("../../tex.txt","r");
@@ -19,7 +22,7 @@ void main()
 	n = ftell (f);
 	rewind (f);
 	insides = new char[n];
-	output = new char[n];
+	output = new byte[n];
 	rewind(f);
 	fread (insides, sizeof(char), 0, f);
 	
