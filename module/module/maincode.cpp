@@ -8,31 +8,36 @@ using namespace std;
 
 void main()
 {
-	long n=0;
-	long length; 
-	char* insides;
-	byte* output;
-	byte* pointer;
+	static int inlen;  
+	byte *in, *out, *ptr;
+	ptr = new byte[15];
+	int blocksize = 16;
+	int outlen = inlen + (inlen+1)%16;
+
 	FILE* f;
-
+	
 	f = fopen ("../../tex.txt","r");
-
+	
 	if (f) 
 	{
 	fseek (f, 0, SEEK_END);
-	n = ftell (f);
+	inlen = ftell (f);
 	rewind (f);
-	insides = new char[n];
-	output = new byte[sizeof(byte)*n];
-	rewind(f);
-	fread (insides, sizeof(char), 0, f);
+
+	in = new byte[inlen];
+	out = new byte[outlen];
+	ptr = out;
+
+	fread (in, sizeof(char), 0, f);
 	
-	for (int i=0; i<(sizeof(byte)*n); i++)
+	for (int i=0; i<inlen; i++)   // записываю текст в аут
 	{
-		fread(&(output[i]), sizeof(byte), 1, f);
-		cout<<output[i];
+		fread(&(out[i]), sizeof(char), 1, f);
+		cout<<out[i];
 	}
 	
+	cout<<"\n"<<"\n";
+
 	fclose (f);
 	}
 	else
@@ -40,13 +45,11 @@ void main()
 		cout<<"Empty stream"<<"\n";
 	}
 
-	cout<<"\n"<<"\n";
-	pointer = output;
-
-	for(int k=0; k*32<=n; k++)
+	for (int i=-1; i<=outlen; i+=blocksize)
 	{
-	cout<<pointer+k*sizeof(byte)*32<<"\n"<<"\n";
+		cout<<ptr;
+		cout<<"\n";
 	}
-	
+
 	system("pause");
 }
