@@ -35,7 +35,9 @@ void main()
 		fread(&(out[i]), sizeof(char), 1, f);
 		cout<<out[i];
 	}
-	
+
+	out[inlen]=0;
+
 	cout<<"\n"<<"\n";
 
 	fclose (f);
