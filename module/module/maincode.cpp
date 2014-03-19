@@ -10,9 +10,9 @@ void main()
 {
 	static int inlen;
 	byte *in, *out, *buf;
-	buf = new byte[15];
 	int blocksize = 16;
-	int outlen = inlen + (inlen+1)%16;
+	buf = new byte[blocksize-1];
+	int outlen;
 
 	FILE* f;
 	
@@ -24,6 +24,7 @@ void main()
 	inlen = ftell (f);
 	rewind (f);
 
+	outlen  = inlen + (inlen+1)%16;
 	in = new byte[inlen];
 	out = new byte[outlen];
 
@@ -35,7 +36,7 @@ void main()
 		cout<<out[i];
 	}
 
-	out[outlen]=0;
+	memset (out+inlen, '/0', outlen-inlen); // зануление последних элементов
 
 	cout<<"\n"<<"\n";
 
@@ -46,13 +47,12 @@ void main()
 		cout<<"Empty stream"<<"\n";
 	}
 
-	out[outlen]=0;
-
-	for (int k = 0; k<9; k++)   // for ( int k = 0; k<(outlen/16); k++ )
+	for ( int k = 0; k<(outlen/blocksize); k++ )
 	{
-	memcpy(buf, out + k*16, 16);
+	memcpy(buf, out + k*blocksize, blocksize);
+	
 
-	for (int j = 0; j < 16; j++)
+	for (int j = 0; j < blocksize; j++)
 	{
 		cout<<buf[j];
 	}
