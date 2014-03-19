@@ -8,9 +8,9 @@ using namespace std;
 
 void main()
 {
-	static int inlen;  
-	byte *in, *out, *ptr;
-	ptr = new byte[15];
+	static int inlen;
+	byte *in, *out, *buf;
+	buf = new byte[15];
 	int blocksize = 16;
 	int outlen = inlen + (inlen+1)%16;
 
@@ -26,7 +26,6 @@ void main()
 
 	in = new byte[inlen];
 	out = new byte[outlen];
-	ptr = out;
 
 	fread (in, sizeof(char), 0, f);
 	
@@ -36,7 +35,7 @@ void main()
 		cout<<out[i];
 	}
 
-	out[inlen]=0;
+	out[outlen]=0;
 
 	cout<<"\n"<<"\n";
 
@@ -47,10 +46,17 @@ void main()
 		cout<<"Empty stream"<<"\n";
 	}
 
-	for (int i=-1; i<=outlen; i+=blocksize)
+	out[outlen]=0;
+
+	for (int k = 0; k<9; k++)   // for ( int k = 0; k<(outlen/16); k++ )
 	{
-		cout<<ptr;
-		cout<<"\n";
+	memcpy(buf, out + k*16, 16);
+
+	for (int j = 0; j < 16; j++)
+	{
+		cout<<buf[j];
+	}
+	cout<<"\n";
 	}
 
 	system("pause");
